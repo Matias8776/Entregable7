@@ -13,12 +13,10 @@
         <label for="password">Contraseña</label>
         <input type="password" name="password" id="password" required />
         <input type="submit" id="submit" />
-        {{#if errors.length}}
+        {{#if message}}
             <div class="error-container">
                 <ul class="error-list">
-                    {{#each errors as |error|}}
-                        <li>{{error}}</li>
-                    {{/each}}
+                    <li>{{message}}</li>
                 </ul>
             </div>
         {{/if}}

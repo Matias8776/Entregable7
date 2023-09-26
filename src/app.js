@@ -13,7 +13,6 @@ import MongoStore from "connect-mongo";
 import sessionsRouter from "./routes/sessions.js";
 import passport from "passport";
 import initializePassport from "./config/passport.js";
-import flash from "connect-flash";
 
 const messagesManager = new MessagesManager();
 
@@ -44,7 +43,6 @@ app.use(
         saveUninitialized: false,
     })
 );
-app.use(flash());
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());

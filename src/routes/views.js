@@ -23,21 +23,23 @@ const privateAccess = (req, res, next) => {
 };
 
 router.get("/", publicAccess, (req, res) => {
-    const errors = req.flash("error") || [];
+    const message = req.session.messages;
     res.render("login", {
-        errors: errors,
+        message: message,
         style: "login.css",
         title: "Ecommerce - Iniciar sesión",
     });
+    delete req.session.messages;
 });
 
 router.get("/register", publicAccess, (req, res) => {
-    const errors = req.flash("error") || [];
+    const message = req.session.messages;
     res.render("register", {
-        errors: errors,
+        message: message,
         style: "register.css",
         title: "Ecommerce - Registro",
     });
+    delete req.session.messages;
 });
 
 router.get("/realtimeproducts", (req, res) => {

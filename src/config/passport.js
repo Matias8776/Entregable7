@@ -15,11 +15,9 @@ const initializePassport = () => {
                 try {
                     let user = await usersModel.findOne({ email: username });
                     if (user) {
-                        return done(
-                            null,
-                            false,
-                            req.flash("error", "El usuario ya existe")
-                        );
+                        return done(null, false, {
+                            message: "El usuario ya existe",
+                        });
                     }
                     const newUser = {
                         first_name,
@@ -55,28 +53,22 @@ const initializePassport = () => {
                         username === "adminCoder@coder.com" &&
                         password !== "adminCod3r123"
                     ) {
-                        return done(
-                            null,
-                            false,
-                            req.flash("error", "Contraseña incorrecta")
-                        );
+                        return done(null, false, {
+                            message: "Contraseña incorrecta",
+                        });
                     } else {
                         const user = await usersModel.findOne({
                             email: username,
                         });
                         if (!user) {
-                            return done(
-                                null,
-                                false,
-                                req.flash("error", "El usuario no existe")
-                            );
+                            return done(null, false, {
+                                message: "El usuario no existe",
+                            });
                         }
                         if (!isValidPassword(user, password)) {
-                            return done(
-                                null,
-                                false,
-                                req.flash("error", "Contraseña incorrecta")
-                            );
+                            return done(null, false, {
+                                message: "Contraseña incorrecta",
+                            });
                         }
                         return done(null, user);
                     }

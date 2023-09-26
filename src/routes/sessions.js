@@ -8,8 +8,8 @@ const router = Router();
 router.post(
     "/login",
     passport.authenticate("login", {
-        failureRedirect: "/faillogin",
-        failureFlash: true,
+        failureRedirect: "/api/sessions/faillogin",
+        failureMessage: true,
     }),
     async (req, res) => {
         if (!req.user)
@@ -23,7 +23,7 @@ router.post(
                 age: 35,
                 role: "Admin",
             };
-            return res.send({ status: "success", payload: req.user });
+            return res.send({ status: "success", payload: req.session.user });
         } else {
             req.session.user = {
                 name: `${req.user.first_name} ${req.user.last_name}`,
@@ -31,16 +31,24 @@ router.post(
                 age: req.user.age,
                 role: "Usuario",
             };
-            res.send({ status: "success", payload: req.user });
+            res.send({ status: "success", payload: req.session.user });
         }
     }
 );
 
+router.get("/faillogin", (req, res) => {
+    const message = req.session.messages;
+    res.status(400).send({
+        status: "error",
+        message: message[message.length -1],
+    });
+});
+
 router.post(
     "/register",
     passport.authenticate("register", {
-        failureRedirect: "/failregister",
-        failureFlash: true,
+        failureRedirect: "/api/sessions/failregister",
+        failureMessage: true,
     }),
     async (req, res) => {
         res.send({
@@ -49,6 +57,14 @@ router.post(
         });
     }
 );
+
+router.get("/failregister", (req, res) => {
+    const message = req.session.messages;
+    res.status(400).send({
+        status: "error",
+        message: message[message.length -1],
+    });
+});
 
 router.get("/logout", (req, res) => {
     req.session.destroy((err) => {
