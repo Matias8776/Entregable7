@@ -6,8 +6,8 @@
 
 ###
 
--   git clone https://github.com/Matias8776/Entregable6.git
--   cd Entregable6
+-   git clone https://github.com/Matias8776/Entregable7.git
+-   cd Entregable7
 -   npm i
 -   npm start
 
